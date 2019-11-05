@@ -2,9 +2,8 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <h1> ToDo List</h1>
-    <input type="text" v-model="inputTask" @keypress="addTask">
-    <Task v-for="task in tasks" :key="task.id" :task="task" v-if="!task.isdone"/>
-    <Task v-for="task in tasks" :key="task.id" :task="task" v-if="task.isdone"/>
+    <input id="create-task" type="text" v-model="inputTask" @keypress="addTask">
+    <Task v-for="task in tasks" :key="task.id" :task="task" @input="onTaskChange"/>
   </div>
 </template>
 
@@ -40,6 +39,14 @@ export default {
         this.inputTask ='';
       }
     },
+    onTaskChange(newTask){
+      return this.tasks = [...this.tasks.filter(task => task.id !== newTask.id), newTask]
+    },
+  },
+  computed: {
+    filterByDone() {
+
+    }, 
   },
 };
 </script>
@@ -52,5 +59,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+#create-task {
+
 }
 </style>

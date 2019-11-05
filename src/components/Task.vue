@@ -15,10 +15,10 @@ export default {
     },
   },
   methods: {
-    change() {
-        this.$emit('input')
-    }
-  }
+    change(e) {
+        this.$emit('input', {...this.task, isdone: e.target.checked});
+    },
+  },
 };
 </script>
 
