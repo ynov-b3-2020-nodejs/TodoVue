@@ -1,20 +1,28 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <Task/>
+    <h1> ToDo List</h1>
+    <Task v-for="task in tasks" :value="task"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
 import Task from './components/Task.vue';
 
-export default {  
+export default {
   name: 'app',
   components: {
     Task,
-    HelloWorld,
+  },
+  data() {
+    return {
+      tasks: [
+        {
+          title: 'Faire les courses',
+          isdone: true,
+        },
+      ],
+    };
   },
 };
 </script>

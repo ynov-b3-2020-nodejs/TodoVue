@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input type="checkbox" id="task-checkbox">
-    <label for="task-checkbox"> {{ msg }}</label>
+    <input type="checkbox" id="task-checkbox" v-model="value.isdone">
+    <label for="task-checkbox"> {{ value.title }}</label>
     <i class="fas fa-times"></i>
   </div>
 </template>
@@ -10,9 +10,9 @@
 export default {
   name: 'Task',
   props: {
-    msg: {
-      type: String,
-      default: 'Type...',
+    value: {
+      type: Object,
+      required: true,
     },
   },
 };
