@@ -2,6 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <h1> ToDo List</h1>
+    <input type="text" v-model="inputTask" @keypress="addTask">
     <Task v-for="task in tasks" :value="task"/>
   </div>
 </template>
@@ -16,14 +17,27 @@ export default {
   },
   data() {
     return {
+      inputTask: '',
       tasks: [
         {
           title: 'Faire les courses',
-          isdone: true,
+          isdone: false,
         },
       ],
     };
   },
+  methods: {
+    addTask(e) {
+        if (e.code === 'Enter'){
+          const newTask = {
+            title: this.inputTask,
+            isdone: false
+          };
+          this.tasks.push(newTask);
+          this.inputTask ='';
+        }
+    }
+  }
 };
 </script>
 
