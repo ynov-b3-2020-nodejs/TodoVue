@@ -3,7 +3,8 @@
     <img alt="Vue logo" src="./assets/logo.png">
     <h1> ToDo List</h1>
     <input type="text" v-model="inputTask" @keypress="addTask">
-    <Task v-for="task in tasks" :value="task"/>
+    <Task v-for="task in tasks" :key="task.id" :task="task" v-if="!task.isdone"/>
+    <Task v-for="task in tasks" :key="task.id" :task="task" v-if="task.isdone"/>
   </div>
 </template>
 
@@ -20,6 +21,7 @@ export default {
       inputTask: '',
       tasks: [
         {
+          id: 0,
           title: 'Faire les courses',
           isdone: false,
         },
@@ -28,16 +30,17 @@ export default {
   },
   methods: {
     addTask(e) {
-        if (e.code === 'Enter'){
-          const newTask = {
-            title: this.inputTask,
-            isdone: false
-          };
-          this.tasks.push(newTask);
-          this.inputTask ='';
-        }
-    }
-  }
+      if (e.code === 'Enter'){
+        const newTask = {
+          id: this.tasks.length,
+          title: this.inputTask,
+          isdone: false
+        };
+        this.tasks.push(newTask);
+        this.inputTask ='';
+      }
+    },
+  },
 };
 </script>
 

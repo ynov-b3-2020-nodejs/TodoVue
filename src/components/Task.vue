@@ -1,8 +1,7 @@
 <template>
   <div>
-    <input type="checkbox" id="task-checkbox" v-model="value.isdone">
-    <label for="task-checkbox"> {{ value.title }}</label>
-    <i class="fas fa-times"></i>
+    <input type="checkbox" :id="'task-checkbox' + task.id" :checked="task.isdone" @change="change">
+    <label :for="'task-checkbox' + task.id" :class="{done: task.isdone}"> {{ task.title }} </label>
   </div>
 </template>
 
@@ -10,14 +9,21 @@
 export default {
   name: 'Task',
   props: {
-    value: {
+    task: {
       type: Object,
       required: true,
     },
   },
+  methods: {
+    change() {
+        this.$emit('input')
+    }
+  }
 };
 </script>
 
-<style lang="sass">
-
+<style lang="scss">
+.done {
+  text-decoration-line: line-through;
+}
 </style>
