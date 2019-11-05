@@ -45,6 +45,7 @@
                     };
                     this.tasks.push(newTask);
                     this.inputTask = '';
+                    localStorage.setItem('tasks', JSON.stringify(this.tasks));
                 }
             },
             onTaskChange(newTask) {
@@ -57,24 +58,33 @@
         computed: {
             filterByDone() {
                 return this.tasks.filter(task => {
-                   switch (this.sort) {
-                       case 'all':
-                           return true;
-                       break;
-                       case 'done':
-                           if (!task.isdone) {
-                               return task;
-                           }
-                           break;
-                       case 'undone':
-                           if (task.isdone) {
-                               return task;
-                           }
-                       break;
-                   }
+                    switch (this.sort) {
+                        case 'all':
+                            return true;
+                            break;
+                        case 'done':
+                            if (!task.isdone) {
+                                return task;
+                            }
+                            break;
+                        case 'undone':
+                            if (task.isdone) {
+                                return task;
+                            }
+                            break;
+                    }
                 })
             },
         },
+        mounted() {
+            if (localStorage.getItem('tasks')) {
+                try {
+                    this.tasks = JSON.parse(localStorage.getItem('tasks'));
+                } catch (e) {
+                    localStorage.removeItem('tasks');
+                }
+            }
+        }
     };
 </script>
 
