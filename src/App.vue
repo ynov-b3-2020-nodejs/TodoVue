@@ -6,11 +6,11 @@
         <Task v-for="task in filterByDone" :key="task.id" :task="task" @input="onTaskChange"/>
 
         <input type="radio" name="sortValue" id="done" value="done" @click="sortTask">
-        <label for="done"><i class="fas fa-mars"></i></label>
+        <label for="done"><i class="far fa-check-square"></i></label>
         <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask">
-        <label for="undone"><i class="fas fa-venus"></i></label>
+        <label for="undone"><i class="far fa-square"></i></label>
         <input type="radio" name="sortValue" id="all" value="all" @click="sortTask">
-        <label for="all"><i class="fas fa-venus-mars"></i></label>
+        <label for="all"><i class="fas fa-globe-africa"></i></label>
     </div>
 </template>
 
