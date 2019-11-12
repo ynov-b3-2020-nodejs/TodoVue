@@ -6,15 +6,21 @@
     <div class="control-bar">
       <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" name="sortValue" id="done" value="done" @click="sortTask" class="custom-control-input">
-        <label for="done" class="custom-control-label"><i class="far fa-square" style="font-size: 15px; color: white "></i></label>
+        <label for="done" class="custom-control-label"><i class="far fa-square"
+          style="font-size: 15px; color: white "></i></label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask" class="custom-control-input">
-        <label for="undone" class="custom-control-label"><i class="far fa-check-square" style="font-size: 15px; color: white"></i></label>
+        <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask"
+               class="custom-control-input">
+        <label for="undone" class="custom-control-label"><i class="far fa-check-square"
+         style="font-size: 15px; color: white"></i></label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" name="sortValue" id="all" value="all" @click="sortTask" class="custom-control-input">
-        <label for="all" class="custom-control-label"><i class="fas fa-globe-africa" style="font-size: 15px; color: white"></i></label>
+        <input type="radio" name="sortValue" id="all" value="all" @click="sortTask"
+               class="custom-control-input" checked>
+        <label for="all" class="custom-control-label"><i class="fas fa-globe-africa"
+                                                         style="font-size: 15px; color: white"></i>
+        </label>
       </div>
     </div>
     <input id="create-task" type="text" v-model="inputTask" @keypress="addTask" class="m-2 p-1"
@@ -101,8 +107,7 @@ export default {
     }
     if (localStorage.getItem('count')) {
       try {
-        // eslint-disable-next-line radix
-        this.count = parseInt(localStorage.getItem('count'));
+        this.count = parseInt(localStorage.getItem('count'), 10);
       } catch (e) {
         localStorage.removeItem('count');
       }

@@ -5,7 +5,7 @@
         <label :for="'task-checkbox' + task.id" :class="{done: task.isdone}" style="color: white">
           {{ task.title }}
         </label>
-        <i class="far fa-times-circle m-1" style="color: white" @click="erase"></i>
+        <i class="fas fa-trash m-1" style="color: #35495e" @click="erase"></i>
     </div>
 </template>
 
