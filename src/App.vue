@@ -1,16 +1,22 @@
 <template>
     <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png">
-        <h1> ToDo List</h1>
-        <input id="create-task" type="text" v-model="inputTask" @keypress="addTask">
-        <Task v-for="task in filterByDone" :key="task.id" :task="task" @input="onTaskChange"/>
+      <img alt="Vue logo" src="./assets/logo.png">
+      <h1> ToDo List</h1>
+      <input id="create-task" type="text" v-model="inputTask" @keypress="addTask">
+      <Task v-for="task in filterByDone" :key="task.id" :task="task" @input="onTaskChange"/>
 
-        <input type="radio" name="sortValue" id="done" value="done" @click="sortTask">
-        <label for="done"><i class="far fa-check-square"></i></label>
-        <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask">
-        <label for="undone"><i class="far fa-square"></i></label>
-        <input type="radio" name="sortValue" id="all" value="all" @click="sortTask">
-        <label for="all"><i class="fas fa-globe-africa"></i></label>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" name="sortValue" id="done" value="done" @click="sortTask" class="custom-control-input">
+        <label for="done" class="custom-control-label"><i class="far fa-check-square"></i></label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask" class="custom-control-input">
+        <label for="undone" class="custom-control-label"><i class="far fa-square"></i></label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" name="sortValue" id="all" value="all" @click="sortTask" class="custom-control-input">
+        <label for="all" class="custom-control-label"><i class="fas fa-globe-africa"></i></label>
+      </div>
     </div>
 </template>
 
