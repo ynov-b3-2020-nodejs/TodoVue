@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <input type="checkbox" :id="'task-checkbox' + task.id" :checked="task.isdone" @change="change">
+  <div class="custom-control custom-checkbox">
+    <input type="checkbox" :id="'task-checkbox' + task.id" :checked="task.isdone" @change="change" class="">
     <label :for="'task-checkbox' + task.id" :class="{done: task.isdone}"> {{ task.title }} </label>
   </div>
 </template>
