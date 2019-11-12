@@ -1,9 +1,11 @@
 <template>
-  <div class="custom-control custom-checkbox">
-    <input type="checkbox" :id="'task-checkbox' + task.id" :checked="task.isdone" @change="change" class="">
-    <label :for="'task-checkbox' + task.id" :class="{done: task.isdone}"> {{ task.title }} </label>
-    <i class="far fa-times-circle" @click="erase"></i>
-  </div>
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" :id="'task-checkbox' + task.id" :checked="task.isdone"
+               @change="change" class="">
+        <label :for="'task-checkbox' + task.id" :class="{done: task.isdone}"> {{ task.title }}
+        </label>
+        <i class="far fa-times-circle" @click="erase"></i>
+    </div>
 </template>
 
 <script>
@@ -17,17 +19,17 @@ export default {
   },
   methods: {
     change(e) {
-        this.$emit('input', {...this.task, isdone: e.target.checked});
+      this.$emit('input', { ...this.task, isdone: e.target.checked });
     },
-    erase(e){
-        this.$emit('erase', {...this.task})
+    erase() {
+      this.$emit('erase', { ...this.task });
     },
   },
 };
 </script>
 
 <style lang="scss">
-.done {
-  text-decoration-line: line-through;
-}
+    .done {
+        text-decoration-line: line-through;
+    }
 </style>
