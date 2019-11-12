@@ -23,7 +23,7 @@
         </label>
       </div>
     </div>
-    <input id="create-task" type="text" v-model="inputTask" @keypress="addTask" class="m-2 p-1"
+    <input id="create-task" type="text" v-model="inputTask" @keypress="addTask" class="m-2 p-2"
            style="border-radius: 15px">
     <br>
     <Task v-for="(task, index) in filterByDone" :key="task.id" :task="task" @input="onTaskChange"
