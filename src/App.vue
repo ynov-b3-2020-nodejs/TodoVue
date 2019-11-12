@@ -50,7 +50,6 @@ export default {
   methods: {
     eraseTask(e) {
       this.tasks.splice(e, 1);
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
     },
     addTask(e) {
       if (e.code === 'Enter') {
@@ -62,13 +61,10 @@ export default {
         this.count = this.count + 1;
         this.tasks.push(newTask);
         this.inputTask = '';
-        localStorage.setItem('tasks', JSON.stringify(this.tasks));
-        localStorage.setItem('count', this.count);
       }
     },
     onTaskChange(newTask) {
       this.tasks = [...this.tasks.filter(task => task.id !== newTask.id), newTask];
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
     },
     sortTask(e) {
       this.sort = e.target.value;
@@ -111,6 +107,14 @@ export default {
         localStorage.removeItem('count');
       }
     }
+  },
+  watch: {
+    tasks() {
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    },
+    count() {
+      localStorage.setItem('count', this.count);
+    },
   },
 };
 </script>
