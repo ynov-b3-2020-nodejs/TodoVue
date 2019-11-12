@@ -1,10 +1,7 @@
 <template>
     <div class="custom-control custom-checkbox">
-        <input type="checkbox" :id="'task-checkbox' + task.id" :checked="task.isdone"
-               @change="change" class="m-2">
-        <label :for="'task-checkbox' + task.id" :class="{done: task.isdone}" style="color: white">
-          {{ task.title }}
-        </label>
+        <input id="checkTask" type="checkbox" :id="'task-checkbox' + task.id" :checked="task.isdone" @change="change" class="custom-control-input">
+        <label :for="'task-checkbox' + task.id" :class="{done: task.isdone}" style="color: white" class="custom-control-label" for="checkTask"> {{ task.title }} </label>
         <i class="far fa-times-circle m-1" style="color: white" @click="erase"></i>
     </div>
 </template>
