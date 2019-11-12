@@ -1,18 +1,18 @@
 <template>
-    <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png">
-        <h1> ToDo List</h1>
-        <input id="create-task" type="text" v-model="inputTask" @keypress="addTask" class="m-2 p-1">
-        <Task v-for="task in filterByDone" :key="task.id" :task="task" @input="onTaskChange"
-              class="p-0" @erase="eraseTask"/>
+  <div id="app">
+    <img alt="Vue logo" src="./assets/logo.png">
+    <h1> ToDo List</h1>
+    <input id="create-task" type="text" v-model="inputTask" @keypress="addTask" class="m-2 p-1">
+    <Task v-for="(task, index) in filterByDone" :key="task.id" :task="task" @input="onTaskChange"
+          class="p-0" @erase="eraseTask(index)"/>
 
-        <input type="radio" name="sortValue" id="done" value="done" @click="sortTask">
-        <label for="done"><i class="far fa-square"></i></label>
-        <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask">
-        <label for="undone"><i class="far fa-check-square"></i></label>
-        <input type="radio" name="sortValue" id="all" value="all" @click="sortTask">
-        <label for="all"><i class="fas fa-globe-africa"></i></label>
-    </div>
+    <input type="radio" name="sortValue" id="done" value="done" @click="sortTask">
+    <label for="done"><i class="far fa-square"></i></label>
+    <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask">
+    <label for="undone"><i class="far fa-check-square"></i></label>
+    <input type="radio" name="sortValue" id="all" value="all" @click="sortTask">
+    <label for="all"><i class="fas fa-globe-africa"></i></label>
+  </div>
 </template>
 
 <script>
@@ -27,6 +27,7 @@ export default {
     return {
       inputTask: '',
       sort: 'all',
+      count: 1,
       tasks: [
         {
           id: 0,
@@ -38,24 +39,26 @@ export default {
   },
   methods: {
     eraseTask(e) {
-      this.tasks.splice(e.id, e.id);
-      localStorage.removeItem()(JSON.stringify(this.tasks.find(task => task.id === e.id)));
+      this.tasks.splice(e, 1);
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
     },
     addTask(e) {
       if (e.code === 'Enter') {
         const newTask = {
-          id: this.tasks.length,
+          id: this.count + 1,
           title: this.inputTask,
           isdone: false,
         };
+        this.count = this.count + 1;
         this.tasks.push(newTask);
         this.inputTask = '';
         localStorage.setItem('tasks', JSON.stringify(this.tasks));
+        localStorage.setItem('count', this.count);
       }
     },
     onTaskChange(newTask) {
-      // eslint-disable-next-line no-return-assign
-      return this.tasks = [...this.tasks.filter(task => task.id !== newTask.id), newTask];
+      this.tasks = [...this.tasks.filter(task => task.id !== newTask.id), newTask];
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
     },
     sortTask(e) {
       this.sort = e.target.value;
@@ -90,21 +93,29 @@ export default {
         localStorage.removeItem('tasks');
       }
     }
+    if (localStorage.getItem('count')) {
+      try {
+        // eslint-disable-next-line radix
+        this.count = parseInt(localStorage.getItem('count'));
+      } catch (e) {
+        localStorage.removeItem('count');
+      }
+    }
   },
 };
 </script>
 
 <style lang="scss">
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
 
-    #create-task {
+  #create-task {
 
-    }
+  }
 </style>
