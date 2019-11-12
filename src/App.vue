@@ -3,7 +3,7 @@
         <img alt="Vue logo" src="./assets/logo.png">
         <h1> ToDo List</h1>
         <input id="create-task" type="text" v-model="inputTask" @keypress="addTask" class="m-2 p-1">
-        <Task v-for="task in filterByDone" :key="task.id" :task="task" @input="onTaskChange" class="p-0"/>
+        <Task v-for="task in filterByDone" :key="task.id" :task="task" @input="onTaskChange" class="p-0" @erase="eraseTask"/>
 
         <input type="radio" name="sortValue" id="done" value="done" @click="sortTask">
         <label for="done"><i class="far fa-square"></i></label>
@@ -36,6 +36,10 @@
             };
         },
         methods: {
+            eraseTask(e) {
+                this.tasks.splice(e.id , e.id);
+                localStorage.removeItem(JSON.stringify(this.tasks.find(task => task.id === e.id)))
+            },
             addTask(e) {
                 if (e.code === 'Enter') {
                     const newTask = {
