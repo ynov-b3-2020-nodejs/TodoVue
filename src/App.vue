@@ -3,15 +3,20 @@
     <img alt="Vue logo" src="./assets/logo.png">
     <h1 style="color: #41b883"> ToDo List</h1>
 
-    <input type="radio" class="m-2" name="sortValue" id="done" value="done" @click="sortTask">
-    <label for="done"><i class="far fa-square" style="font-size: 15px; color: white "></i></label>
-    <input type="radio" class="m-2 " name="sortValue" id="undone" value="undone" @click="sortTask">
-    <label for="undone"><i class="far fa-check-square"
-                           style="font-size: 15px; color: white"></i></label>
-    <input type="radio" class="m-2" name="sortValue" id="all" value="all" @click="sortTask">
-    <label for="all"><i class="fas fa-globe-africa"
-                        style="font-size: 15px; color: white"></i></label>
-    <br>
+    <div class="control-bar">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" name="sortValue" id="done" value="done" @click="sortTask" class="custom-control-input">
+        <label for="done" class="custom-control-label"><i class="far fa-square" style="font-size: 15px; color: white "></i></label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask" class="custom-control-input">
+        <label for="undone" class="custom-control-label"><i class="far fa-check-square" style="font-size: 15px; color: white"></i></label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" name="sortValue" id="all" value="all" @click="sortTask" class="custom-control-input">
+        <label for="all" class="custom-control-label"><i class="fas fa-globe-africa" style="font-size: 15px; color: white"></i></label>
+      </div>
+    </div>
     <input id="create-task" type="text" v-model="inputTask" @keypress="addTask" class="m-2 p-1"
            style="border-radius: 15px">
     <br>
@@ -122,5 +127,10 @@ export default {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+  }
+  .custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #41b883;
+    background-color: #41b883;
   }
 </style>
