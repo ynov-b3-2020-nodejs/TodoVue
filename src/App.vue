@@ -1,6 +1,5 @@
 <template>
     <div id="app">
-<<<<<<< HEAD
       <img alt="Vue logo" src="./assets/logo.png">
       <h1> ToDo List</h1>
       <input id="create-task" type="text" v-model="inputTask" @keypress="addTask">
@@ -18,19 +17,6 @@
         <input type="radio" name="sortValue" id="all" value="all" @click="sortTask" class="custom-control-input">
         <label for="all" class="custom-control-label"><i class="fas fa-globe-africa"></i></label>
       </div>
-=======
-        <img alt="Vue logo" src="./assets/logo.png">
-        <h1> ToDo List</h1>
-        <input id="create-task" type="text" v-model="inputTask" @keypress="addTask" class="m-2 p-1">
-        <Task v-for="task in filterByDone" :key="task.id" :task="task" @input="onTaskChange" class="p-0"/>
-
-        <input type="radio" name="sortValue" id="done" value="done" @click="sortTask">
-        <label for="done"><i class="far fa-square"></i></label>
-        <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask">
-        <label for="undone"><i class="far fa-check-square"></i></label>
-        <input type="radio" name="sortValue" id="all" value="all" @click="sortTask">
-        <label for="all"><i class="fas fa-globe-africa"></i></label>
->>>>>>> f2981edde37c0535cbe76f300945d7281be84729
     </div>
 </template>
 
