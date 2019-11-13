@@ -2,10 +2,10 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <h1 style="color: #41b883"> ToDo List</h1>
-
     <div class="control-bar">
       <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" name="sortValue" id="done" value="done" @click="sortTask" class="custom-control-input">
+        <input type="radio" name="sortValue" id="done" value="done" @click="sortTask"
+               class="custom-control-input">
         <label for="done" class="custom-control-label"><i class="far fa-square"
           style="font-size: 15px; color: white "></i></label>
       </div>
@@ -19,25 +19,39 @@
         <input type="radio" name="sortValue" id="all" value="all" @click="sortTask"
                class="custom-control-input" checked>
         <label for="all" class="custom-control-label"><i class="fas fa-globe-africa"
-                                                         style="font-size: 15px; color: white"></i>
+                 style="font-size: 15px; color: white"></i>
         </label>
       </div>
     </div>
     <input id="create-task" type="text" v-model="inputTask" @keypress="addTask" class="m-2 p-1"
-           style="border-radius: 15px">
+    style="border-radius: 15px; background-color: #383d41; color: white; border-color: #383d41">
     <br>
-    <Task v-for="(task, index) in filterByDone" :key="task.id" :task="task" @input="onTaskChange"
-          class="p-0" @erase="eraseTask(index)"/>
+   <draggable
+    v-model="tasks"
+   >
+    <transition-group>
+    <Task
+          v-for="(task, index) in filterByDone"
+          :key="task.id"
+          :task="task"
+          @input="onTaskChange"
+          class="p-0"
+          @erase="eraseTask(index)"
+    />
+    </transition-group>
+   </draggable>
   </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable';
 import Task from './components/Task.vue';
 
 export default {
   name: 'app',
   components: {
     Task,
+    draggable,
   },
   data() {
     return {
@@ -49,6 +63,7 @@ export default {
           id: 0,
           title: 'Faire les courses',
           isdone: false,
+          job: '',
         },
       ],
     };
