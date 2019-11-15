@@ -11,8 +11,8 @@
       </div>
       <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask"
-               class="custom-control-input">
-        <label for="undone" class="custom-control-label"><i class="far fa-check-square"
+               class="custom-control-nput">
+        <label for="undone" class="cuistom-control-label"><i class="far fa-check-square"
          style="font-size: 15px; color: white"></i></label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
@@ -93,7 +93,9 @@ export default {
   },
   computed: {
     filterByDone() {
+      // eslint-disable-next-line array-callback-return,consistent-return
       return this.tasks.filter((task) => {
+        // eslint-disable-next-line default-case
         switch (this.sort) {
           case 'all':
             return true;
