@@ -3,12 +3,14 @@
 
 <script>
 export default {
-  name: 'List',
+  name: 'Board',
   props: {
-    task: {
+    board: {
       type: Object,
       required: true,
     },
+  },
+  methods: {
   },
 };
 </script>
