@@ -7,40 +7,21 @@
   <div class="row">
    <div v-for="(board, boardId) in boards" class="col" :key="boardId">
     <br>
-    <input type="text" class="input-title-board" v-model="board.title">
+    <input type="text" class="input-title-board" v-model="board.title" @keypress="changeTitleBoard">
     <i class="far fa-trash-alt" @click="removeBoard(board.id)"></i>
     <div class="control-bar">
      <input id="create-task" type="text" v-model="board.inputTask" @keypress="addTask($event, boardId)"
             class="m-2 p-1"
             style="border-radius: 15px; background-color: #383d41; color: white; border-color: #383d41">
-     <br>
-     <div class="custom-control custom-radio custom-control-inline pt-2 ">
-      <input type="radio"  name="sortValue" :id="'done'+boardId" value="done" @click="sortTask($event, boardId)"
-             class="custom-control-input">
-      <label :for="'done'+boardId" class="custom-control-label"><i class="far fa-square"
-                                       style="font-size: 15px; color: white "></i></label>
-     </div>
-     <div class="custom-control custom-radio custom-control-inline">
-      <input type="radio" name="sortValue"  :id="'undone' + boardId" value="undone"
-             @click="sortTask($event, boardId)" class="custom-control-input">
-      <label :for="'undone'+boardId" class="custom-control-label"><i class="far fa-check-square"
-                                       style="font-size: 15px; color: white"></i></label>
-     </div>
-     <div class="custom-control custom-radio custom-control-inline">
-      <input type="radio" name="sortValue" :id="'all'+boardId"  value="all" @click="sortTask($event, boardId)"
-             class="custom-control-input" checked>
-      <label :for="'all'+boardId" class="custom-control-label"><i class="fas fa-globe-africa"
-                                                       style="font-size: 15px; color: white"></i>
-      </label>
-     </div>
     </div>
     <draggable
-     v-model="tasks"
+     v-model="task"
+     draggable=".p-0"
     >
      <transition-group>
       <Task
        v-for="(task, index) in board.tasks"
-       :key="task.id"
+       :key="task.id + board.id"
        :task="task"
        @input="onTaskChange($event, boardId)"
        class="p-0"
@@ -88,8 +69,8 @@ export default {
     };
   },
   methods: {
-    eraseTask(e, index) {
-      this.boards[index].tasks.splice(e, 1);
+    changeTitleBoard() {
+      localStorage.setItem('board', JSON.stringify(this.boards));
     },
     removeBoard(id) {
       this.boards = this.boards.filter(board => board.id !== id);
@@ -106,6 +87,10 @@ export default {
       };
       this.boards.push(newBoard);
     },
+    eraseTask(e, index) {
+      this.boards[index].tasks.splice(e, 1);
+      localStorage.setItem('board', JSON.stringify(this.boards));
+    },
     addTask(e, index) {
       if (e.code === 'Enter') {
         const newTask = {
@@ -117,37 +102,35 @@ export default {
         this.boards[index].count = this.boards[index].count + 1;
         this.boards[index].tasks.push(newTask);
         this.boards[index].inputTask = '';
+        localStorage.setItem('board', JSON.stringify(this.boards));
       }
     },
     onTaskChange(newTask, index) {
       this.boards[index].tasks = [...this.boards[index].tasks.filter(task => task.id !== newTask.id), newTask];
-    },
-    sortTask(e, index) {
-      this.boards[index].sort = e.target.value;
+      localStorage.setItem('board', JSON.stringify(this.boards));
     },
   },
   computed: {
-    filterByDone() {
-      // eslint-disable-next-line array-callback-return
-      return this.tasks.filter((task) => {
-        // eslint-disable-next-line default-case
-        switch (this.sort) {
-          case 'all':
-            return true;
-            break;
-          case 'done':
-            if (!task.isdone) {
-              return task;
-            }
-            break;
-          case 'undone':
-            if (task.isdone) {
-              return task;
-            }
-            break;
-        }
-      });
-    },
+    // filterByDone() {
+    //   return this.tasks.filter((task) => {
+    //     switch (this.sort) {
+    //       case 'all':
+    //         return true;
+    //         break;
+    //       case 'done':
+    //         if (!task.isdone) {
+    //           return task;
+    //         }
+    //         break;
+    //       case 'undone':
+    //         if (task.isdone) {
+    //           return task;
+    //         }
+    //         break;
+    //     }
+    //     return true;
+    //   });
+    // },
   },
   mounted() {
     if (localStorage.getItem('board')) {
