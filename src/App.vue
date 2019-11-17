@@ -2,14 +2,14 @@
  <div id="app">
   <img alt="Vue logo" src="./assets/logo.png">
   <h1 style="color: #41b883"> ToDo List</h1>
-  <i class="fas fa-plus-square" @click="addBoard" style="color: white"></i>
+  <i class="far fa-plus-square" @click="addBoard" style="color: white" ></i>
   <div class="container">
   <div class="row">
    <div v-for="(board, boardId) in boards" class="col" :key="boardId">
     <div style="border-color: white; border: white">
      <br>
      <input type="text" class="input-title-board" v-model="board.title" @keypress="changeTitleBoard">
-     <i class="far fa-trash-alt" @click="removeBoard(board.id)"></i>
+     <i class="far fa-trash-alt" @click="removeBoard(board.id)" style="color: darkgrey"></i>
      <div class="control-bar">
       <input id="create-task" type="text" v-model="board.inputTask" @keypress="addTask($event, boardId)"
              class="m-2 p-1"
@@ -91,7 +91,6 @@ export default {
     },
     eraseTask(e, index) {
       this.boards[index].tasks.splice(e, 1);
-      localStorage.setItem('board', JSON.stringify(this.boards));
     },
     addTask(e, index) {
       if (e.code === 'Enter') {
@@ -104,12 +103,10 @@ export default {
         this.boards[index].count = this.boards[index].count + 1;
         this.boards[index].tasks.push(newTask);
         this.boards[index].inputTask = '';
-        localStorage.setItem('board', JSON.stringify(this.boards));
       }
     },
     onTaskChange(newTask, index) {
       this.boards[index].tasks = [...this.boards[index].tasks.filter(task => task.id !== newTask.id), newTask];
-      localStorage.setItem('board', JSON.stringify(this.boards));
     },
   },
   computed: {
@@ -151,8 +148,11 @@ export default {
     }
   },
   watch: {
-    boards() {
-      localStorage.setItem('board', JSON.stringify(this.boards));
+    boards: {
+      handler() {
+        localStorage.setItem('board', JSON.stringify(this.boards));
+      },
+      deep: true,
     },
     countBoard() {
       localStorage.setItem('count', this.countBoard);
