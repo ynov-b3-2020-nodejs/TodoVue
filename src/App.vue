@@ -8,12 +8,20 @@
    <div v-for="(board, boardId) in boards" class="col" :key="boardId">
     <div style="border-color: white; border: white">
      <br>
-     <input type="text" class="input-title-board" v-model="board.title" @keypress="changeTitleBoard">
-     <i class="far fa-trash-alt" @click="removeBoard(board.id)" style="color: darkgrey"></i>
+     <input type="text" class="input-title-board"
+            v-model="board.title"
+            @keypress="changeTitleBoard"
+     >
+     <i class="far fa-trash-alt"
+        @click="removeBoard(board.id)"
+        style="color: darkgrey">
+     </i>
      <div class="control-bar">
-      <input id="create-task" type="text" v-model="board.inputTask" @keypress="addTask($event, boardId)"
-             class="m-2 p-1"
-             style="border-radius: 15px; background-color: #383d41; color: white; border-color: #383d41">
+      <input id="create-task" type="text" class="m-2 p-1"
+             v-model="board.inputTask"
+             @keypress="addTask($event, boardId)"
+             style="border-radius: 15px; background-color: #383d41; color: white;
+             border-color: #383d41">
      </div>
      <draggable
       :list="board.tasks"
@@ -106,7 +114,8 @@ export default {
       }
     },
     onTaskChange(newTask, index) {
-      this.boards[index].tasks = [...this.boards[index].tasks.filter(task => task.id !== newTask.id), newTask];
+      this.boards[index].tasks = [...this.boards[index].tasks
+        .filter(task => task.id !== newTask.id), newTask];
     },
   },
   computed: {
