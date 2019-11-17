@@ -21,15 +21,15 @@
                                        style="font-size: 15px; color: white "></i></label>
      </div>
      <div class="custom-control custom-radio custom-control-inline">
-      <input type="radio" name="sortValue"  id="undone" value="undone"
+      <input type="radio" name="sortValue"  :id="'undone' + boardId" value="undone"
              @click="sortTask($event, boardId)" class="custom-control-input">
-      <label for="undone" class="custom-control-label"><i class="far fa-check-square"
+      <label :for="'undone'+boardId" class="custom-control-label"><i class="far fa-check-square"
                                        style="font-size: 15px; color: white"></i></label>
      </div>
      <div class="custom-control custom-radio custom-control-inline">
-      <input type="radio" name="sortValue" id="all"  value="all" @click="sortTask($event, boardId)"
+      <input type="radio" name="sortValue" :id="'all'+boardId"  value="all" @click="sortTask($event, boardId)"
              class="custom-control-input" checked>
-      <label for="all" class="custom-control-label"><i class="fas fa-globe-africa"
+      <label :for="'all'+boardId" class="custom-control-label"><i class="fas fa-globe-africa"
                                                        style="font-size: 15px; color: white"></i>
       </label>
      </div>
