@@ -1,9 +1,12 @@
 # TodoVue
+(Trello-like in preAlpha on branch)
 
-### Schéma de data 
+### ToDo
+ToDo list in Vue, with sorting mode, draggrable tasks, and more features 
 
-##### Task    
-**id**: 0   
-**title**: 'Faire les courses'   
-**isdone**: true (false si pas fait)
+#### Install  
+yarn install 
+yarn build
+yarn lint
+yarn serve
 
