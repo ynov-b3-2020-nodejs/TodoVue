@@ -1,15 +1,17 @@
-# TodoVue
-(Trello-like in preAlpha on branch)
 
-### ToDo
-ToDo list in Vue, with sorting mode, draggrable tasks, and more features 
+# ToDo List in Vue
+ *Update trello-like beta on branch*
 
-#### Install  
-yarn install
+### Init
+**yarn install**
 
-yarn build
+**yarn build**
 
-yarn lint
+**yarn lint**
 
-yarn serve
+**yarn serve**
+
+
+  
+
 
