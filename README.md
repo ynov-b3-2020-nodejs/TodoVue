@@ -1,9 +1,15 @@
-# TodoVue
+# ToDo List in Vue
+ *Update trello-like beta on branch*
 
-### Schéma de data 
+### Init
+**yarn install**
 
-##### Task    
-**id**: 0   
-**title**: 'Faire les courses'   
-**isdone**: true (false si pas fait)
+**yarn build**
+
+**yarn lint**
+
+**yarn serve**
+
+
+  
 

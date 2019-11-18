@@ -1,141 +1,204 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <h1 style="color: #41b883"> ToDo List</h1>
-
-    <div class="control-bar">
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" name="sortValue" id="done" value="done" @click="sortTask" class="custom-control-input">
-        <label for="done" class="custom-control-label"><i class="far fa-square"
-          style="font-size: 15px; color: white "></i></label>
-      </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" name="sortValue" id="undone" value="undone" @click="sortTask"
-               class="custom-control-input">
-        <label for="undone" class="custom-control-label"><i class="far fa-check-square"
-         style="font-size: 15px; color: white"></i></label>
-      </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" name="sortValue" id="all" value="all" @click="sortTask"
-               class="custom-control-input" checked>
-        <label for="all" class="custom-control-label"><i class="fas fa-globe-africa"
-                                                         style="font-size: 15px; color: white"></i>
-        </label>
-      </div>
+ <div id="app">
+  <img alt="Vue logo" src="./assets/logo.png">
+  <h1 style="color: #41b883"> ToDo List</h1>
+  <i class="far fa-plus-square" @click="addBoard" style="color: white" ></i>
+  <div class="container">
+  <div class="row">
+   <div v-for="(board, boardId) in boards" class="col" :key="boardId">
+    <div style="border-color: white; border: white">
+     <br>
+     <input type="text" class="input-title-board"
+            v-model="board.title"
+            @keypress="changeTitleBoard"
+     >
+     <i class="far fa-trash-alt"
+        @click="removeBoard(board.id)"
+        style="color: darkgrey">
+     </i>
+     <div class="control-bar">
+      <input id="create-task" type="text" class="m-2 p-1"
+             v-model="board.inputTask"
+             @keypress="addTask($event, boardId)"
+             style="border-radius: 15px; background-color: #383d41; color: white;
+             border-color: #383d41">
+     </div>
+     <draggable
+      :list="board.tasks"
+      :group="{ name: 'g1'}"
+     >
+      <transition-group>
+       <Task
+        v-for="(task, index) in board.tasks"
+        :key="task.id + board.id"
+        :task="task"
+        @input="onTaskChange($event, boardId)"
+        class="p-0"
+        @erase="eraseTask(index, boardId)"
+       />
+      </transition-group>
+     </draggable>
     </div>
+    </div>
+<<<<<<< HEAD
     <input id="create-task" type="text" v-model="inputTask" @keypress="addTask" class="m-2 p-2"
            style="border-radius: 15px">
     <br>
     <Task v-for="(task, index) in filterByDone" :key="task.id" :task="task" @input="onTaskChange"
           class="p-0" @erase="eraseTask(index)"/>
+=======
+>>>>>>> f42eb970b5d282c24f9f132dd9b845587cc70dfc
   </div>
+ </div>
+ </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable';
 import Task from './components/Task.vue';
 
 export default {
   name: 'app',
   components: {
     Task,
+    draggable,
   },
   data() {
     return {
-      inputTask: '',
-      sort: 'all',
-      count: 1,
-      tasks: [
+      countBoard: 1,
+      boards: [
         {
-          id: 0,
-          title: 'Faire les courses',
-          isdone: false,
+          id: 1,
+          title: 'Perso',
+          inputTask: '',
+          count: 0,
+          sort: 'all',
+          tasks: [
+            {
+              id: 0,
+              title: '1',
+              isdone: false,
+              job: '',
+              boardId: 0,
+            },
+          ],
         },
       ],
     };
   },
   methods: {
-    eraseTask(e) {
-      this.tasks.splice(e, 1);
+    changeTitleBoard() {
+      localStorage.setItem('board', JSON.stringify(this.boards));
     },
-    addTask(e) {
+    removeBoard(id) {
+      this.boards = this.boards.filter(board => board.id !== id);
+    },
+    addBoard() {
+      this.countBoard = this.countBoard + 1;
+      const newBoard = {
+        id: this.countBoard,
+        title: 'Nouveau tableau',
+        inputTask: '',
+        count: 0,
+        sort: 'all',
+        tasks: [],
+      };
+      this.boards.push(newBoard);
+    },
+    eraseTask(e, index) {
+      this.boards[index].tasks.splice(e, 1);
+    },
+    addTask(e, index) {
       if (e.code === 'Enter') {
         const newTask = {
-          id: this.count + 1,
-          title: this.inputTask,
+          id: this.boards[index].count + 1,
+          title: this.boards[index].inputTask,
           isdone: false,
+          boardId: this.boards[index].id,
         };
-        this.count = this.count + 1;
-        this.tasks.push(newTask);
-        this.inputTask = '';
+        this.boards[index].count = this.boards[index].count + 1;
+        this.boards[index].tasks.push(newTask);
+        this.boards[index].inputTask = '';
       }
     },
-    onTaskChange(newTask) {
-      this.tasks = [...this.tasks.filter(task => task.id !== newTask.id), newTask];
-    },
-    sortTask(e) {
-      this.sort = e.target.value;
+    onTaskChange(newTask, index) {
+      this.boards[index].tasks = [...this.boards[index].tasks
+        .filter(task => task.id !== newTask.id), newTask];
     },
   },
   computed: {
-    filterByDone() {
-      return this.tasks.filter((task) => {
-        switch (this.sort) {
-          case 'all':
-            return true;
-            break;
-          case 'done':
-            if (!task.isdone) {
-              return task;
-            }
-            break;
-          case 'undone':
-            if (task.isdone) {
-              return task;
-            }
-            break;
-        }
-      });
-    },
+    // filterByDone() {
+    //   return this.tasks.filter((task) => {
+    //     switch (this.sort) {
+    //       case 'all':
+    //         return true;
+    //         break;
+    //       case 'done':
+    //         if (!task.isdone) {
+    //           return task;
+    //         }
+    //         break;
+    //       case 'undone':
+    //         if (task.isdone) {
+    //           return task;
+    //         }
+    //         break;
+    //     }
+    //     return true;
+    //   });
+    // },
   },
   mounted() {
-    if (localStorage.getItem('tasks')) {
+    if (localStorage.getItem('board')) {
       try {
-        this.tasks = JSON.parse(localStorage.getItem('tasks'));
+        this.boards = JSON.parse(localStorage.getItem('board'));
       } catch (e) {
-        localStorage.removeItem('tasks');
+        localStorage.removeItem('board');
       }
     }
     if (localStorage.getItem('count')) {
       try {
-        this.count = parseInt(localStorage.getItem('count'), 10);
+        this.countBoard = parseInt(localStorage.getItem('count'), 10);
       } catch (e) {
         localStorage.removeItem('count');
       }
     }
   },
   watch: {
-    tasks() {
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    boards: {
+      handler() {
+        localStorage.setItem('board', JSON.stringify(this.boards));
+      },
+      deep: true,
     },
-    count() {
-      localStorage.setItem('count', this.count);
+    countBoard() {
+      localStorage.setItem('count', this.countBoard);
     },
   },
 };
 </script>
 
 <style lang="scss">
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
-  .custom-control-input:checked~.custom-control-label::before {
-    color: #fff;
-    border-color: #41b883;
-    background-color: #41b883;
-  }
+ #app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+ }
+
+ .custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: #41b883;
+  background-color: #41b883;
+ }
+
+ .input-title-board {
+  color: white;
+  background-color: #1b1e21;
+  border: none;
+  border-color: transparent;
+  text-align: center;
+ }
 </style>

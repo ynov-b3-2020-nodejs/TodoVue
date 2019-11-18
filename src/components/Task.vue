@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="custom-control custom-checkbox">
     <input type="checkbox" class="custom-control-input" :id="'task-checkbox' + task.id" :checked="task.isdone" @change="change">
     <label :for="'task-checkbox' + task.id" :class="{done: task.isdone}" class="custom-control-label" style="color: white" data-toggle="modal" data-target="taskModal"> {{ task.title }} </label>
@@ -8,6 +9,12 @@
     <b-modal :id="`modal-${task.id}`" :title="task.title">
       <p class="my-4"> {{ task.description }} </p>
     </b-modal>
+=======
+  <div class="custom-control custom-checkbox mt-2">
+     <input type="checkbox" class="custom-control-input" :id=" task.boardId+'task-checkbox' + task.id  " :checked="task.isdone" @change="change">
+     <label :for=" task.boardId+'task-checkbox' + task.id  " :class="{done: task.isdone}" class="custom-control-label" style="color: white"> {{ task.title }} </label>
+     <i class="fas fa-trash m-1" style="color: #35495e" @click="erase"></i>
+>>>>>>> f42eb970b5d282c24f9f132dd9b845587cc70dfc
   </div>
 </template>
 
